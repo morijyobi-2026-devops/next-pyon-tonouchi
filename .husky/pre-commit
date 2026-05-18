@@ -1,4 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run lint:md
+# Run lint-staged so only staged files are linted/formatted
+npx --no-install lint-staged

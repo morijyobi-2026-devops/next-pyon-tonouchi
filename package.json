@@ -6,7 +6,9 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "test": "jest",
-    "lint:md": "markdownlint-cli2 \"README.md\" \"docs/**/*.md\""
+    "lint:md": "npx --no-install markdownlint-cli \"README.md\" \"docs/**/*.md\"",
+    "lint": "eslint \"src/**/*.js\"",
+    "format": "prettier --write \"**/*.{js,json,md}\""
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -17,8 +19,23 @@
   "devDependencies": {
     "jest": "^29.5.0",
     "nodemon": "^2.0.22",
-    "markdownlint-cli2": "^0.37.0",
-    "husky": "^8.0.3"
+    "markdownlint-cli": "^0.37.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "^2.8.8",
+    "eslint": "^8.50.0"
   },
-  "prepare": "husky install"
+  "prepare": "husky install",
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ],
+    "*.{json,md,markdown}": [
+      "prettier --write",
+      "npx --no-install markdownlint-cli",
+      "git add"
+    ]
+  }
 }
