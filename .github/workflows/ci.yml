@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  markdown-lint:
+    name: Markdown lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          npm ci || npm install
+
+      - name: Run markdownlint (README and docs)
+        run: |
+          # Prefer the npm script if available
+          if npm run -s lint:md --silent; then
+            echo "lint:md succeeded"
+          else
+            echo "npm script failed or not present — running markdownlint-cli2 via npx"
+            npx --yes markdownlint-cli2 "README.md" "docs/**/*.md"
+          fi
