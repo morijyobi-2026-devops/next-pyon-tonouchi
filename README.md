@@ -44,3 +44,17 @@ Linux 開発環境の動作確認
 3. PR を作成してレビュー・マージ
 
 Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+## Repo harness progress (automated update)
+
+- Date: 2026-05-18
+- Status: repo-level harness implementation in progress
+- Done:
+  - Added husky pre-commit to invoke lint-staged
+  - Added lint-staged, prettier, eslint configuration (package.json)
+  - Added GitHub Actions workflow to run markdownlint on PRs
+  - Created spec: docs/superpowers/specs/2026-05-18-repo-harness-design.md
+- Next:
+  - Resolve remaining local dev dependency installation issues (completed now if npm install succeeded)
+  - Verify pre-commit behavior locally: staged files are formatted and linted before commit
+  - Add JS/TS lint steps to CI when code exists
