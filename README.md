@@ -76,3 +76,23 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
     before commit
 
   - Add JS/TS lint steps to CI when code exists
+
+## 2026-05-25（作業ログ）
+
+本日行った作業の概要:
+
+- .editorconfig を追加してエディタ共通設定を導入
+- markdownlint-cli2 を devDependency に追加し、package.json の lint:md を更新
+- package-lock.json を再生成して npm ci の不整合を解消
+- docs/spec-v0.1.md と docs/plan-v0.1.md を作成・修正（markdownlint の指摘に対応）
+- husky + lint-staged による pre-commit を利用して、コミット対象のみを lint/format する設定を維持
+- GitHub Actions に lint ワークフローを追加・修正（Node.js を 20 に更新）
+- ローカルと CI で lint を実行し、エラーを解消
+- ブランチ chore/editorconfig-markdownlint を作成し PR をオープン (PR #4)
+
+確認方法:
+
+- PR: [#4](https://github.com/morijyobi-2026-devops/next-pyon-tonouchi/pull/4)
+- ローカル: npm ci && npm run lint && npm run lint:md
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
