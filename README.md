@@ -76,3 +76,43 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
     before commit
 
   - Add JS/TS lint steps to CI when code exists
+
+## 2026-05-25（作業ログ）
+
+本日行った作業の概要（詳細）:
+
+- .editorconfig を追加（.editorconfig）: プロジェクト全体でインデントや改行、末尾スペースの扱いを統一
+- markdownlint-cli2 を devDependency に追加（package.json）と lint:md スクリプト更新
+  - インストール: npm install --save-dev markdownlint-cli2@latest
+- package-lock.json を再生成して npm ci の不整合を解消（npm install を実行）
+- docs/spec-v0.1.md、docs/plan-v0.1.md を作成し、markdownlint の指摘（改行・リスト周り、行長）に対応
+- husky + lint-staged による pre-commit を利用
+  - ステージされたファイルのみを prettier と markdownlint-cli2 で整形・検査
+  - 注意: 現在 husky の警告が出る（pre-commit の古いヘッダー行） — 将来的に修正予定
+- GitHub Actions に lint ワークフロー追加（.github/workflows/lint.yml）および CI ワークフロー修正（.github/workflows/ci.yml）
+  - Node.js を 20 に更新（markdownlint-cli2 の依存 string-width が新しい正規表現 /v フラグを使用するため）
+- ローカルと CI で lint を実行し、エラーを解消（最新の Lint ジョブは成功）
+- 変更ファイル一覧:
+  - .editorconfig
+  - package.json
+  - package-lock.json
+  - .github/workflows/lint.yml
+  - .github/workflows/ci.yml
+  - docs/spec-v0.1.md
+  - docs/plan-v0.1.md
+  - README.md
+- ブランチと PR:
+  - ブランチ: chore/editorconfig-markdownlint
+  - PR: [#4](https://github.com/morijyobi-2026-devops/next-pyon-tonouchi/pull/4)
+
+確認方法（手順）:
+
+1. ローカルで依存を更新: npm install
+2. ローカルで検証: npm ci && npm run lint && npm run lint:md
+3. PR を確認: Actions の Lint ジョブが成功していることを確認
+
+備考:
+
+- Markdown ファイルのみ trim_trailing_whitespace を false に設定して、意図的な末尾スペース（行末の 2 スペース）を許容しています
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
