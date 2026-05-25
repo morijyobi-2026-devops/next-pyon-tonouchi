@@ -51,31 +51,29 @@ lint:md` を実行するよう設定しました。
 
 Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
-## Repo harness progress (automated update)
+## リポジトリハーネス進捗（自動更新）
 
-- Date: 2026-05-18
+- 日付: 2026-05-18
 
-- Status: repo-level harness implementation in progress
+- 状態: リポジトリレベルのハーネス実装を進行中
 
-- Done:
+- 実施したこと:
 
-  - Added husky pre-commit to invoke lint-staged
+  - husky の pre-commit を追加し、lint-staged を呼び出すように設定
 
-  - Added lint-staged, prettier, eslint configuration (package.json)
+  - lint-staged、Prettier、ESLint の設定を追加（package.json）
 
-  - Added GitHub Actions workflow to run markdownlint on PRs
+  - Pull Request で markdownlint を実行する GitHub Actions ワークフローを追加
 
-  - Created spec: docs/superpowers/specs/2026-05-18-repo-harness-design.md
+  - 仕様書を作成: docs/superpowers/specs/2026-05-18-repo-harness-design.md
 
-- Next:
+- 次にやること:
 
-  - Resolve remaining local dev dependency installation issues (completed now if
-    npm install succeeded)
+  - ローカルの開発依存インストールの残課題を解決（npm install が成功していれば完了）
 
-  - Verify pre-commit behavior locally: staged files are formatted and linted
-    before commit
+  - pre-commit の動作をローカルで検証: ステージされたファイルがコミット前に整形・lint されることを確認
 
-  - Add JS/TS lint steps to CI when code exists
+  - コードが増えたら CI に JS/TS の lint ステップを追加
 
 ## 2026-05-25（作業ログ）
 
