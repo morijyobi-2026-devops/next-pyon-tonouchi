@@ -1,0 +1,17 @@
+{
+  "extends": ["config:base"],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["at 05:00 on monday", "at 05:00 on thursday"],
+  "rangeStrategy": "pin",
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "enabled": true
+    }
+  ],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5
+}
