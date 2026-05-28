@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: Classroom Navigation API
+  version: 0.1.0
+  description: API for ver0.1 classroom-next navigation (Google login, timetable, next-class determination)
+servers:
+  - url: https://api.example.school
+    description: Production (placeholder)
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Exchange Google ID token for access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id_token:
+                  type: string
+                  description: Google ID token obtained from client-side OAuth flow
+              required: [id_token]
+      responses:
+        '200':
+          description: Auth successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+  /api/v1/timetable:
+    get:
+      summary: Get student's timetable for a date
+      parameters:
+        - in: query
+          name: date
+          schema:
+            type: string
+            format: date
+          required: true
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Timetable entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TimetableEntry'
+  /api/v1/events/finished:
+    post:
+      summary: Notify server that current class finished; returns next class suggestion
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                current_class_id:
+                  type: string
+                timestamp:
+                  type: string
+                  format: date-time
+              required: [timestamp]
+      responses:
+        '200':
+          description: Next class suggestion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NextClassResponse'
+  /api/v1/rooms:
+    get:
+      summary: List or get rooms
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: string
+          required: false
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Room or list of rooms
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Room'
+                  - type: array
+                    items:
+                      $ref: '#/components/schemas/Room'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    AuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          example: Bearer
+        expires_in:
+          type: integer
+          example: 3600
+        user:
+          $ref: '#/components/schemas/User'
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [student, admin]
+    TimetableEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        class_name:
+          type: string
+        start_time:
+          type: string
+          format: date-time
+        end_time:
+          type: string
+          format: date-time
+        room_id:
+          type: string
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        building:
+          type: string
+        floor:
+          type: string
+        coords_lat:
+          type: number
+          format: double
+        coords_lng:
+          type: number
+          format: double
+        map_image_url:
+          type: string
+    NextClassResponse:
+      type: object
+      properties:
+        next_class:
+          $ref: '#/components/schemas/TimetableEntry'
+        room:
+          $ref: '#/components/schemas/Room'
+        suggested_departure_minutes:
+          type: integer
+          description: Recommended minutes before next class to depart
+security:
+  - bearerAuth: []
