@@ -1,0 +1,15 @@
+name: Setup pnpm
+
+on: [workflow_dispatch]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 'latest'
+      - name: Verify pnpm
+        run: pnpm -v
