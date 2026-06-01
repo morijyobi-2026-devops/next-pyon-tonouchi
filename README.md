@@ -117,18 +117,19 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 ## 進捗: サプライチェーン対策 (2026-06-01)
 
-- using-superpowers スキルでのブレインストーミングと仕様作成: 完了（docs/superpowers/* を参照）
+- using-superpowers スキルでのブレインストーミングと仕様作成: 完了（docs/superpowers/\* を参照）
 - markdownlint-cli2 + husky + lint-staged: 完了（package.json, .husky を確認）
 - GitHub Actions での lint 実行: 完了（.github/workflows/lint.yml, ci.yml） — ただしアクションの SHA 固定は未実施（現在はタグ使用）
 - editorconfig: 完了 (.editorconfig)
 - 依存パッケージのバージョン固定: 完了 (package.json に固定バージョン)
 - pnpm への移行: 完了 (pnpm-lock.yaml, pnpm-workspace.yaml が存在) — ただし package-lock.json が残存
 - GitHub Actions の SHA 固定: 未完了
-- renovate の minimumReleaseAge (3日): 未設定
-- pnpm の minimum release age (2日): 未設定
-- PR 上でのライブラリ脅威分析（socket表示）: 未実装
+- renovate の minimumReleaseAge (3 日): 未設定
+- pnpm の minimum release age (2 日): 未設定
+- PR 上でのライブラリ脅威分析（socket 表示）: 未実装
 
 推奨次ステップ:
+
 1. ワークフロー内の actions を SHA（git ref）で固定
 2. .github/renovate.json に "minimumReleaseAge": 3 を追加
 3. pnpm インストール前チェック（リリース日を確認して 2 日未満は拒否）を導入
@@ -137,4 +138,3 @@ Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 ---
 
 (自動更新: 2026-06-01)
-
