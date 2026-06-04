@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    // github actions の sha pin留めをrenovateにやってもらう
+    "helpers:pinGitHubActionDigests",
+  ],
+
+  // Renovateの実行スケジュール
+  "timezone": "Asia/Tokyo",
+  "schedule": [
+    // cron式で実行スケジュールを指定
+    "* 5 * * 1,4",
+  ],
+
+  // そのバージョンが公開されてから3日経たないと、アップデートのプルリクを作らない
+  "minimumReleaseAge": "3 days",
+}
