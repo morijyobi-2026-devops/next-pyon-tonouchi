@@ -18,6 +18,14 @@ jobs:
         uses: pnpm/action-setup@53751a9789c7351e4924f01fe68370252a4f1f18
         with:
           version: 'latest'
+      - name: Ensure .npmrc allows sharp
+        run: |
+          if [ -f .npmrc ]; then
+            grep -q "allowed-scripts\[]*=sharp" .npmrc || echo "allowed-scripts[]=sharp" >> .npmrc
+          else
+            echo "allowed-scripts[]=sharp" > .npmrc
+          fi
+
       - name: Approve pnpm build scripts
         run: pnpm approve-builds --all || true
 
