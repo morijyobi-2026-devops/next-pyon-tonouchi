@@ -30,9 +30,13 @@ jobs:
           grep -q "allowed-scripts\[]*=sharp" ~/.npmrc 2>/dev/null || echo "allowed-scripts[]=sharp" >> ~/.npmrc
 
       - name: Approve pnpm build scripts
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         run: pnpm approve-builds --all || true
 
       - name: Install dependencies (pnpm)
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         run: pnpm install --frozen-lockfile
       - name: Run ESLint
         run: pnpm run lint

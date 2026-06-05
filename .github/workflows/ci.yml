@@ -35,9 +35,13 @@ jobs:
           grep -q "allowed-scripts\[]*=sharp" ~/.npmrc 2>/dev/null || echo "allowed-scripts[]=sharp" >> ~/.npmrc
 
       - name: Approve pnpm build scripts
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         run: pnpm approve-builds --all || true
 
       - name: Install dependencies
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         run: |
           npm ci || npm install
 
