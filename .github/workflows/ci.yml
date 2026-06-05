@@ -11,14 +11,37 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@53751a9789c7351e4924f01fe68370252a4f1f18
+        with:
+          version: 'latest'
+
+      - name: Ensure .npmrc allows sharp
+        run: |
+          if [ -f .npmrc ]; then
+            grep -q "allowed-scripts\[]*=sharp" .npmrc || echo "allowed-scripts[]=sharp" >> .npmrc
+          else
+            echo "allowed-scripts[]=sharp" > .npmrc
+          fi
+          # Also ensure runner's user .npmrc contains the approval so pnpm reads it in Actions
+          mkdir -p $(dirname ~/.npmrc) 2>/dev/null || true
+          grep -q "allowed-scripts\[]*=sharp" ~/.npmrc 2>/dev/null || echo "allowed-scripts[]=sharp" >> ~/.npmrc
+
+      - name: Approve pnpm build scripts
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
+        run: pnpm approve-builds --all || true
+
       - name: Install dependencies
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         run: |
           npm ci || npm install
 
