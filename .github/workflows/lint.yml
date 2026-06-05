@@ -25,6 +25,9 @@ jobs:
           else
             echo "allowed-scripts[]=sharp" > .npmrc
           fi
+          # Also ensure runner's user .npmrc contains the approval so pnpm reads it in Actions
+          mkdir -p $(dirname ~/.npmrc) 2>/dev/null || true
+          grep -q "allowed-scripts\[]*=sharp" ~/.npmrc 2>/dev/null || echo "allowed-scripts[]=sharp" >> ~/.npmrc
 
       - name: Approve pnpm build scripts
         run: pnpm approve-builds --all || true
