@@ -27,6 +27,8 @@ jobs:
         run: pnpm approve-builds --all || true
 
       - name: Install dependencies
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: 'true'
         run: |
           npm ci || npm install
 
