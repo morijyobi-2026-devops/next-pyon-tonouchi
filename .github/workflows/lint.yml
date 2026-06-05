@@ -20,8 +20,6 @@ jobs:
           version: 'latest'
       - name: Approve pnpm build scripts
         run: pnpm approve-builds --all || true
-      - name: Approve pnpm build scripts
-        run: pnpm approve-builds --all || true
 
       - name: Install dependencies (pnpm)
         run: pnpm install --frozen-lockfile
