@@ -2,10 +2,6 @@
   "name": "classroom-nav",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.11.1",
-  "engines": {
-    "node": ">=18 <24"
-  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
