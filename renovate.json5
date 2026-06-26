@@ -1,18 +1,18 @@
 {
+  // Keep Renovate's baseline safety defaults.
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended",
-    // github actions の sha pin留めをrenovateにやってもらう
+    // Pin GitHub Actions to immutable digests and keep those digests updated.
     "helpers:pinGitHubActionDigests",
   ],
 
-  // Renovateの実行スケジュール
+  // Renovate schedule uses repository-local time with hour-level granularity.
   "timezone": "Asia/Tokyo",
   "schedule": [
-    // cron式で実行スケジュールを指定
     "* 5 * * 1,4",
   ],
 
-  // そのバージョンが公開されてから3日経たないと、アップデートのプルリクを作らない
+  // Avoid immediately consuming freshly published releases.
   "minimumReleaseAge": "3 days",
 }

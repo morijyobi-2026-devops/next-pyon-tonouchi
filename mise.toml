@@ -1,0 +1,46 @@
+[tools]
+node = "24.17.0"
+pnpm = "11.8.0"
+
+[tasks."docker:dev"]
+description = "Docker で dev サーバーを起動する (http://localhost:3000)"
+dir = "{{config_root}}"
+run = "docker compose -f compose.dev.yaml up"
+
+[tasks."docker:dev:build"]
+description = "dev イメージをビルドする"
+dir = "{{config_root}}"
+run = "docker compose -f compose.dev.yaml build"
+
+[tasks."docker:prod"]
+description = "Docker で prod サーバーを起動する (http://localhost:3000)"
+dir = "{{config_root}}"
+run = "docker compose -f compose.prod.yaml up --build"
+
+[tasks."docker:prod:build"]
+description = "prod イメージをビルドする"
+dir = "{{config_root}}"
+run = "docker compose -f compose.prod.yaml build"
+
+[tasks."docker:down"]
+description = "dev / prod の Docker コンテナを停止・削除する"
+dir = "{{config_root}}"
+run = [
+  "docker compose -f compose.dev.yaml down",
+  "docker compose -f compose.prod.yaml down",
+]
+
+[tasks."cf:build"]
+description = "OpenNext で Cloudflare 向けにビルドする"
+dir = "{{config_root}}"
+run = "pnpm --filter next-pyon cf:build"
+
+[tasks."cf:preview"]
+description = "Cloudflare ランタイム(workerd)でローカル起動する"
+dir = "{{config_root}}"
+run = "pnpm --filter next-pyon cf:preview"
+
+[tasks."cf:deploy"]
+description = "Cloudflare へ手動デプロイする (要 wrangler login)"
+dir = "{{config_root}}"
+run = "pnpm --filter next-pyon cf:deploy"

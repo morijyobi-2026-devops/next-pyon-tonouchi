@@ -1,11 +1,33 @@
-node_modules
-npm-debug.log
-.DS_Store
+# ビルドコンテキストはリポジトリルート。不要・重いものを除外する。
+**/node_modules
+**/.next
+**/out
+**/build
+
+# OpenNext / wrangler の生成物
+**/.open-next
+**/.wrangler
+
+# git / 開発ツール
 .git
 .gitignore
-dist
-.next
-coverage
-.env
-Dockerfile*
-docker-compose*.yml
+.worktrees
+.husky
+.idea
+.github
+mise-tasks
+mise.toml
+
+# ドキュメント
+docs
+**/*.md
+
+# compose / Dockerfile 自体
+compose.*.yaml
+**/*.Dockerfile
+.dockerignore
+
+# 環境変数・ログ・OS ファイル
+**/.env*
+**/*.log
+**/.DS_Store

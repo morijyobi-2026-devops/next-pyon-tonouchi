@@ -1,0 +1,15 @@
+name: next-pyon-prod
+
+services:
+  app:
+    container_name: next-pyon-app-prod
+    build:
+      context: .
+      dockerfile: next-pyon/prod.Dockerfile
+    # .env があれば読み込む（無くてもエラーにしない）
+    env_file:
+      - path: .env
+        required: false
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
