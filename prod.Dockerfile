@@ -1,26 +1,21 @@
-FROM node:22-bullseye-slim AS base
+FROM node:22-alpine
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Install dependencies
+# Copy package files
 COPY package.json pnpm-lock.yaml* ./
 
-# ★ これを追加（必須）
+# Approve build scripts（sqlite3 対策）
 RUN pnpm approve-builds
 
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Build
+# Copy source
 COPY . .
-RUN pnpm run build
 
-# Production image
-FROM node:22-bullseye-slim AS runner
-WORKDIR /app
-
-COPY --from=base /app ./
-
-CMD ["pnpm", "start"]
+# Start dev server
+CMD ["pnpm", "dev"]
