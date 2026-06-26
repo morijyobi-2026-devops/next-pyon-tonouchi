@@ -9,7 +9,7 @@
     "lint": "pnpm run lint:md && pnpm run lint:app",
     "lint:md": "markdownlint-cli2 \"README.md\" \"next-pyon/README.md\" \"docs/**/*.md\"",
     "lint:app": "pnpm --filter next-pyon lint",
-    "build": "pnpm run build:app",
+    "build": "pnpm --filter ./next-pyon run build",
     "build:app": "pnpm --filter next-pyon build"
   },
   "devDependencies": {
