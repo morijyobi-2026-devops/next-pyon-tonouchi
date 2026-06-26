@@ -9,7 +9,9 @@
     "lint:md": "npx --no-install markdownlint-cli2 \"README.md\" \"docs/**/*.md\"",
     "lint": "eslint \"src/**/*.js\" --no-error-on-unmatched-pattern",
     "format": "prettier --write \"**/*.{js,json,md}\"",
-    "build": "echo \"no build step\""
+    "build": "echo \"no build step\"",
+    "predeploy": "pnpm run build",
+    "deploy": "npx wrangler deploy"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
