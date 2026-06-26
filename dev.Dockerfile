@@ -20,4 +20,3 @@ COPY . .
 # Dev start
 CMD ["pnpm", "dev"]
 EOF
-
