@@ -1,14 +1,23 @@
-FROM node:20-alpine
+cat > dev.Dockerfile <<'EOF'
+FROM node:22-alpine
 
-# Install deps (including dev deps for development image)
 WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm ci
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Copy package files
+COPY package.json pnpm-lock.yaml* ./
+
+# Approve builds (sqlite3 等のビルドスクリプト対策)
+RUN pnpm install --frozen-lockfile --ignore-scripts \
+  && pnpm approve-builds \
+  && pnpm install --frozen-lockfile
 
 # Copy source
-COPY . ./
+COPY . .
 
-EXPOSE 3000 3001
+# Dev start
+CMD ["pnpm", "dev"]
+EOF
 
-# Default to API dev server; docker-compose can override to run Next dev
-CMD ["npm", "run", "dev"]
