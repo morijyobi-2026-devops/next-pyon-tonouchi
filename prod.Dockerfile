@@ -1,6 +1,6 @@
-FROM node:22-alpine
+FROM node:22-alpine AS base
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -8,14 +8,23 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy package files
 COPY package.json pnpm-lock.yaml* ./
 
-# Approve build scripts（sqlite3 対策）
+# ① まず ignore-scripts で依存だけ入れる（sqlite3 のビルドをスキップ）
+RUN pnpm install --frozen-lockfile --ignore-scripts
+
+# ② 依存が入った状態で approve-builds を実行（ここで sqlite3 が検出される）
 RUN pnpm approve-builds
 
-# Install dependencies
+# ③ もう一度 install（今度は sqlite3 のビルドが許可される）
 RUN pnpm install --frozen-lockfile
 
-# Copy source
+# Build
 COPY . .
+RUN pnpm run build
 
-# Start dev server
-CMD ["pnpm", "dev"]
+# Production image
+FROM node:22-alpine AS runner
+WORKDIR /app
+
+COPY --from=base /app ./
+
+CMD ["pnpm", "start"]
