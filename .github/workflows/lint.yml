@@ -21,9 +21,15 @@ jobs:
         with:
           version: 'latest'
 
-      - name: Approve pnpm build scripts
-        run: pnpm approve-builds --all || true
+      # ① まず ignore-scripts で依存だけ入れる
+      - name: Install deps (ignore scripts)
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
+      # ② sqlite3 のビルドを許可
+      - name: Approve pnpm build scripts
+        run: pnpm approve-builds
+
+      # ③ もう一度 install（今度はビルドが通る）
       - name: Install dependencies (pnpm)
         run: pnpm install --frozen-lockfile
 
