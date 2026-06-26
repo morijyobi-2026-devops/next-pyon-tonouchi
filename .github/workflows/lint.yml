@@ -23,7 +23,8 @@ jobs:
 
       - name: Approve pnpm build scripts
         run: pnpm approve-builds --all || true
-
+      - run: pnpm approve-builds
+      
       - name: Install dependencies (pnpm)
         run: pnpm install --frozen-lockfile
 
