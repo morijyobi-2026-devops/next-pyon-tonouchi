@@ -1,2 +1,9 @@
 packages:
-  - '.'
+  - .
+allowBuilds:
+  sqlite3: set this to true or false
+ignoredBuiltDependencies:
+  - esbuild
+  - sharp
+  - sqlite3
+  - workerd
