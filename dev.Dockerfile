@@ -1,3 +1,4 @@
+cat > dev.Dockerfile <<'EOF'
 FROM node:22-alpine
 
 WORKDIR /usr/src/app
@@ -18,4 +19,5 @@ COPY . .
 
 # Dev start
 CMD ["pnpm", "dev"]
+EOF
 
