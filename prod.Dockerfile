@@ -1,24 +1,26 @@
-# Production Dockerfile using Node 22 and pnpm
 FROM node:22-bullseye-slim AS base
+
 WORKDIR /app
 
-# Install pnpm via corepack
+# Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
 # Install dependencies
 COPY package.json pnpm-lock.yaml* ./
+
+# ★ これを追加（必須）
+RUN pnpm approve-builds
+
 RUN pnpm install --frozen-lockfile
 
 # Build
 COPY . .
-RUN pnpm build
+RUN pnpm run build
 
-# Final image
+# Production image
 FROM node:22-bullseye-slim AS runner
 WORKDIR /app
-RUN corepack enable && corepack prepare pnpm@latest --activate
-ENV NODE_ENV=production
-COPY --from=base /app .
-RUN pnpm prune --prod
-EXPOSE 3000
-CMD ["pnpm","start:next"]
+
+COPY --from=base /app ./
+
+CMD ["pnpm", "start"]
