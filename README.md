@@ -1,6 +1,6 @@
-# next-pyon-suzuryo
+# next-pyon-tonouchi
 
-next-pyon-suzuryo
+next-pyon-tonouchi
 
 更新日: 2026-05-21
 
